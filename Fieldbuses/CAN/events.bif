@@ -1,0 +1,3 @@
+event can_request%(CANID: count, DLC : count, RTR: count, Error: count, Extended: count, payload: CAN_payload%);
+event can_reply%(mac_src: string,  THA: string%);
+event bad_can%( SHA: string, THA: string, explanation: string%);
