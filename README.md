@@ -30,7 +30,13 @@ The overall system is a hierarchical and distributed ICS, composed of:
 * A Human Machine Interface (HMI) [Magelis XBTGT 2330](https://www.se.com/ww/en/download/document/35010372K01000/).
 
 On each loop, the actuators and and sensors are directly wired to the servo drive inputs/outputs. Communication between the PLC and the servo drives uses a CANopen fieldbus while the HMI and the PLC are connected through a Modbus TCP/IP network.
-![Cartesian robot](./Pictures/Robot1.png "Cartesian robot").
+
+<p align="center" width="100%">
+    <img width="20%" src="./Pictures/robot0.png ">
+    <img width="20%" src="./Pictures/robot1.png ">
+    <img width="25.5%" src="./Pictures/robot2.png ">
+</p>
+
 
 
 # Usage <a name="usage"></a>
