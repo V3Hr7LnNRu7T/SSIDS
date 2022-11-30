@@ -24,7 +24,7 @@ In order to illustrate better the project, the steps are detailed through a use 
 With the use case, we capture network traffic at Fieldbus and Ethernet TCP/IP levels, we use Zeek to capture data and dispatch it to our detection scripts. Only extracts of the detection scripts are given here.
 The system is monitored at runtime.
 
-Attacks scripts are provided in the folder [CAN_Attacks](./CAN_Attacks).
+Attacks scripts are provided in the folder [CAN_Attacks](./CAN_Attacks). Pcap files of the system are provided in the folder [Pcap](./Pcap).
 
 # Use case <a name="usecase"></a>
 
@@ -62,7 +62,7 @@ git clone --recursive -b v4.1.0-dev https://github.com/zeek/zeek
 ## Configure Fieldbuses <a name="fieldbuses"></a>
 
 ### CAN
-You need a [CAN-USB](www.peak-system.com/PCAN-USB.199.0.html?&L=2) adapter to connect to the CAN fieldbus.
+You need a [CAN-USB](https://www.peak-system.com/PCAN-USB.199.0.html?&L=2) adapter to connect to the CAN fieldbus.
 
 We need to set up the access to the CAN interface by initialising a socket and bind that socket to an interface. Install open source library [python-can](https://github.com/hardbyte/python-can).
 
