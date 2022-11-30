@@ -1,0 +1,43 @@
+1. launch broker
+
+2. launch publisher ./modbus_rtu_pub 
+By default the publisher wait for messages in ./msg and publish topics to 127.0.0.1:9999:  /modbus_rtu_good and /modbus_rtu_bad (by testing CRC)
+A copy of network traffic is saved in output.pcapng
+
+Options:
+  -b, --bad_topic=BAD        Topic name for bad CRC messages publishing,
+                             default /modbus_rtu_bad
+  -f, --file=FILE            File name for pcapng conversion, default
+                             output.pcapng
+  -g, --good_topic=GOOD      Topic name for good CRC messages publishing,
+                             default /modbus_rtu_good
+      --log=BBRO             Broker  address for bad CRC messages publishing,
+                             default 127.0.0.1:9999
+  -p, --publish=PUB          Enables publisher y/n, default y
+  -q, --queue=QUEUE          Message queue for incoming captured Modbus frames
+                             from the probe. Has to be the same as for the
+                             probe and shall exist. Default ./msg 
+  -s, --server=GBRO          Broker  address for good CRC messages publishing,
+                             default 127.0.0.1:9999
+  -v, --verbose              Produce verbose output
+  -w, --wireshark=PCAP       Enables pcapng conversion y/n, default y
+  -?, --help                 Give this help list
+      --usage                Give a short usage message
+  -V, --version              Print program version
+  
+3. launch probe ./modbus_rtu_probe
+By default the probe captures at /dev/ttyUSB0 speed 19200 coded 8e1 and sends messages in ./msg
+Options:
+  -c, --conf=CONF      	  Character encoding and parity : encoding bits    
+  				parity stop bits : like 8n1, default 8e1
+  -p, --port=TTY             Serial port pseudofile : /dev/ttyS0, /dev/ttyUSB0
+                             and so, default /dev/tty/USB0 
+  -q, --queue=QUEUE          Message queue for captured Modbus frames. It will
+                             be created if it not exists. Default ./msg 
+  -s, --speed=SPEED          Serial port I/O speed : 2600 4800 9600 119200,
+                             default 119200
+  -v, --verbose              Produce verbose output
+  -?, --help                 Give this help list
+      --usage                Give a short usage message
+  -V, --version              Print program version
+
