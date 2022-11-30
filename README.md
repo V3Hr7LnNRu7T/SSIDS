@@ -15,9 +15,13 @@ SSIDS is a Python 3 project. It is a Standard Specification-based IDS, for Indus
 
 # Aim of the project <a name="project"></a>
 
+The aim of the project is to present a detection framework for ICS. The steps can be applied to any industrial system.
+In order to illustrate better the project, the steps are detailed through a use case.
 
+With the use case, we capture network traffic at Fieldbus and Ethernet TCP/IP levels, we use Zeek to capture data and dispatch it to our detection scripts. Only extracts of the detection scripts are given here.
+The system is monitored at runtime.
 
-
+Attacks scripts are provided in the folder [CAN_Attacks](./CAN_Attacks).
 
 # Use case <a name="usecase"></a>
 
@@ -95,13 +99,13 @@ You need a [RS-485 to USB](https://www.gotronic.fr/art-convertisseur-usb-rs485-3
 
 We developped a stand-alone Modbus RTU Worker; codes are in the Folder [Fieldbuses/Modbus_RTU](./Fieldbuses/Modbus_RTU).
 
-Configure permissions for the Modbus RTU Worker:
+Install and configure permissions for the Modbus RTU Worker:
 
 ```
+make
 sudo chmod ugo+rw /dev/ttyUSB0
 
 ```
-
 
 
 ## Install Zeek
@@ -129,19 +133,34 @@ make & sudo make install
 
 # Usage <a name="usage"></a>
 
-## server
+We use multiple threads simultaneously:
+* A server that collects all the messages/topics
+* Worker(s) that capture network traffic and publish messages to the server
+* Detection scripts that subscribe to topics in order to monitor the system during its execution.
 
-## Set Zeek configurations
+## Server
 
-In /usr/local/zeek/etc/ you can configure the following files
+execute [server.py](./ssrc/server.py)
 
+## Publishers
 
-##Zeekctl
+For traffic capture on one interface only, a simple command line can be used. For example if we want to monitor can0 interface with a [specific script](./src/Workers/robot1_publishers.zeek):
+```
+sudo zeek -i can0 robot1_publishers.zeek
+```
+
+Otherwise, for mulit-interfaces capture, Zeekctl has to be used. In /usr/local/zeek/etc/ you need to fill the configuration files. Personal scripts can be added in /usr/local/zeek/share/zeek/policy/, they will be launched automatically.
+Then:
 ```
 sudo zeekctl 
 deploy 
 ```
-## Add project repository to path <a name="config"></a>
+
+## Subscribers
+
+Add current repository to PYTHONPATH in order to use absolute imports (source export PYTHONPATH=yourpath...)
+
+Execute subscriber(s).
 
 
 
