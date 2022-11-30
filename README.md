@@ -4,9 +4,12 @@
 3. [Use case](#usecase)
 4. [Installations](#install)
     1. [Install prerequisites for SSIDS](#prereq)
-    2. [Add Fieldbus extensions](#extensions)
-    3. [Configure interfaces and add project repository to path](#config)
+    2. [Configure Fieldbuses](#fieldbuses)
+    3. [Install Zeek](#zeek)
 5. [Usage](#usage)
+    1. [Server](#server)
+    2. [Publishers](#pub)
+    3. [Subscribers](#sub)
 
 # SSIDS <a name="introduction"></a>
 SSIDS is a Zeek/Python 3 project. It is a Standard Specification-based IDS, for Industrial Control Systems (ICSs). This repository contains extracts of codes and aims at presenting the concept of the project.  In this repository you will find codes for extending ZEEK IDS to industrial fieldbus detection and detection scripts for online monitoring.
@@ -56,7 +59,7 @@ See [Zeek](https://github.com/zeek/) official github. We have Zeek version 4.1.0
 git clone --recursive -b v4.1.0-dev https://github.com/zeek/zeek
 ```
 
-## Configure Fieldbuses <a name="extensions"></a>
+## Configure Fieldbuses <a name="fieldbuses"></a>
 
 ### CAN
 You need a [CAN-USB](www.peak-system.com/PCAN-USB.199.0.html?&L=2) adapter to connect to the CAN fieldbus.
@@ -108,7 +111,7 @@ sudo chmod ugo+rw /dev/ttyUSB0
 ```
 
 
-## Install Zeek
+## Install Zeek <a name="zeek"></a>
 
 From Zeek folder:
 ```
@@ -138,11 +141,11 @@ We use multiple threads simultaneously:
 * Worker(s) that capture network traffic and publish messages to the server
 * Detection scripts that subscribe to topics in order to monitor the system during its execution.
 
-## Server
+## Server  <a name="server"></a>
 
 execute [server.py](./ssrc/server.py)
 
-## Publishers
+## Publishers  <a name="pub"></a>
 
 For traffic capture on one interface only, a simple command line can be used. For example if we want to monitor can0 interface with a [specific script](./src/Workers/robot1_publishers.zeek):
 ```
@@ -156,7 +159,7 @@ sudo zeekctl
 deploy 
 ```
 
-## Subscribers
+## Subscribers  <a name="sub"></a>
 
 Add current repository to PYTHONPATH in order to use absolute imports (source export PYTHONPATH=yourpath...)
 
