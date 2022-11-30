@@ -143,7 +143,7 @@ We use multiple threads simultaneously:
 
 ## Server  <a name="server"></a>
 
-execute [server.py](./ssrc/server.py)
+execute [server.py](./src/server.py)
 
 ## Publishers  <a name="pub"></a>
 
