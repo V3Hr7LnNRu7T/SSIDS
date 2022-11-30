@@ -4,20 +4,27 @@
 3. [Use case](#usecase)
 4. [Installations](#install)
     1. [Install prerequisites for SSIDS](#prereq)
-    2. [Add Fieldbus extensions](#extensions)
-    3. [Configure interfaces and add project repository to path](#config)
+    2. [Configure Fieldbuses](#fieldbuses)
+    3. [Install Zeek](#zeek)
 5. [Usage](#usage)
+    1. [Server](#server)
+    2. [Publishers](#pub)
+    3. [Subscribers](#sub)
 
 # SSIDS <a name="introduction"></a>
-SSIDS is a Python 3 project. It is a Standard Specification-based IDS, for Industrial Control Systems (ICSs). This repository contains extracts of codes and aims at presenting the concept of the project.  In this repository you will find codes for extending ZEEK IDS to industrial fieldbus detection and detection scripts for online monitoring.
+SSIDS is a Zeek/Python 3 project. It is a Standard Specification-based IDS, for Industrial Control Systems (ICSs). This repository contains extracts of codes and aims at presenting the concept of the project.  In this repository you will find codes for extending ZEEK IDS to industrial fieldbus detection and detection scripts for online monitoring.
 
 
 
 # Aim of the project <a name="project"></a>
 
+The aim of the project is to present a detection framework for ICS. The steps can be applied to any industrial system.
+In order to illustrate better the project, the steps are detailed through a use case.
 
+With the use case, we capture network traffic at Fieldbus and Ethernet TCP/IP levels, we use Zeek to capture data and dispatch it to our detection scripts. Only extracts of the detection scripts are given here.
+The system is monitored at runtime.
 
-
+Attacks scripts are provided in the folder [CAN_Attacks](./CAN_Attacks). Pcap files of the system are provided in the folder [Pcap](./Pcap).
 
 # Use case <a name="usecase"></a>
 
@@ -52,10 +59,10 @@ See [Zeek](https://github.com/zeek/) official github. We have Zeek version 4.1.0
 git clone --recursive -b v4.1.0-dev https://github.com/zeek/zeek
 ```
 
-## Configure Fieldbuses <a name="extensions"></a>
+## Configure Fieldbuses <a name="fieldbuses"></a>
 
 ### CAN
-You need a [CAN-USB](www.peak-system.com/PCAN-USB.199.0.html?&L=2) adapter to connect to the CAN fieldbus.
+You need a [CAN-USB](https://www.peak-system.com/PCAN-USB.199.0.html?&L=2) adapter to connect to the CAN fieldbus.
 
 We need to set up the access to the CAN interface by initialising a socket and bind that socket to an interface. Install open source library [python-can](https://github.com/hardbyte/python-can).
 
@@ -95,16 +102,16 @@ You need a [RS-485 to USB](https://www.gotronic.fr/art-convertisseur-usb-rs485-3
 
 We developped a stand-alone Modbus RTU Worker; codes are in the Folder [Fieldbuses/Modbus_RTU](./Fieldbuses/Modbus_RTU).
 
-Configure permissions for the Modbus RTU Worker:
+Install and configure permissions for the Modbus RTU Worker:
 
 ```
+make
 sudo chmod ugo+rw /dev/ttyUSB0
 
 ```
 
 
-
-## Install Zeek
+## Install Zeek <a name="zeek"></a>
 
 From Zeek folder:
 ```
@@ -129,19 +136,34 @@ make & sudo make install
 
 # Usage <a name="usage"></a>
 
-## server
+We use multiple threads simultaneously:
+* A server that collects all the messages/topics
+* Worker(s) that capture network traffic and publish messages to the server
+* Detection scripts that subscribe to topics in order to monitor the system during its execution.
 
-## Set Zeek configurations
+## Server  <a name="server"></a>
 
-In /usr/local/zeek/etc/ you can configure the following files
+execute [server.py](./src/server.py)
 
+## Publishers  <a name="pub"></a>
 
-##Zeekctl
+For traffic capture on one interface only, a simple command line can be used. For example if we want to monitor can0 interface with a [specific script](./src/Workers/robot1_publishers.zeek):
+```
+sudo zeek -i can0 robot1_publishers.zeek
+```
+
+Otherwise, for mulit-interfaces capture, Zeekctl has to be used. In /usr/local/zeek/etc/ you need to fill the configuration files. Personal scripts can be added in /usr/local/zeek/share/zeek/policy/, they will be launched automatically.
+Then:
 ```
 sudo zeekctl 
 deploy 
 ```
-## Add project repository to path <a name="config"></a>
+
+## Subscribers  <a name="sub"></a>
+
+Add current repository to PYTHONPATH in order to use absolute imports (source export PYTHONPATH=yourpath...)
+
+Execute subscriber(s).
 
 
 
