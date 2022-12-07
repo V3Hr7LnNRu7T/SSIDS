@@ -1,9 +1,4 @@
-# trames.py
-
-class Trame(object) :
-    """ 
-    Trames CAN+mbrtu
-    """
+class frame(object) :
 
     def __init__(self, d):
         self.protocole = d[2][0]
@@ -42,7 +37,7 @@ class Trame(object) :
             return (getattr(self, field) == val)
 
 
-class trame_can(Trame):
+class can_frame(frame):
 
     def __init__(self, d):
         super().__init__(d)
@@ -55,14 +50,14 @@ class trame_can(Trame):
 
 #########################################################
 
-class trame_mbtcp(Trame):
+class mbtcp_frame(frame):
 
     def __init__(self, d):
         super().__init__(d)
         self.ts = d[2][1][0][32][0]
         self.fcode = d[2][1][1][3]
 
-class trame_mbtcp_wmcr(trame_mbtcp):
+class mbtcp_wmcr_frame(mbtcp_frame):
 
     def __init__(self, d):
         super().__init__(d)
@@ -73,10 +68,3 @@ class trame_mbtcp_wmcr(trame_mbtcp):
 
 
 
-
-
-
-class trame_attaque(Trame):
-    def __init__(self, d):
-        super().__init__(d)
-        self.fcode = d[2][1][1][3]

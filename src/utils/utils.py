@@ -1,17 +1,14 @@
-from pyIDS.utils.trames import *
+from src.utils.frames import *
 
-def type_trame(res):
+def type_frame(res):
 
     
     if res[2][0] == 'good_can_request_1': 
-        return trame_can(res)
+        return can_frame(res)
     if res[2][0] == 'modbus_message' :
-        try:
-            return trame_mbtcp(res)
-        except:
-            return trame_attaque(res)
+        return mbtcp_frame(res)
     if res[2][0] == 'modbus_write_multiple_coils_request' :
-        return trame_mbtcp_wmcr(res)
+        return mbtcp_wmcr_frame(res)
     else:
-        return Trame(res)
+        return frame(res)
 

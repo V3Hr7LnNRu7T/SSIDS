@@ -2,7 +2,7 @@ from transitions import Machine, MachineError, EventData, State
 from typing import Callable
 import collections
 import time
-from pyIDS.utils.decorators import timer
+from src.utils.decorators import timer
 
 
 class dvmd_machine():
@@ -36,7 +36,7 @@ class dvmd_machine():
                     #print(time.time())
                     print ('[drive mode state_machine - node {}] ALERTE "unauthorized drive mode value"'.format(self.nodeID))
                 
-                print('node', self.nodeID, self.state)
+                #print('node', self.nodeID, self.state)
         except MachineError as err:
             pass
             print(time.time())

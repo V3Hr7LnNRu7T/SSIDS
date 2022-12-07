@@ -2,7 +2,7 @@ from transitions import Machine, MachineError, EventData, State
 from typing import Callable
 import collections
 import time
-from pyIDS.utils.decorators import timer, run_once, repeat
+from src.utils.decorators import timer, run_once, repeat
 
 
 class nmt_machine(Machine):

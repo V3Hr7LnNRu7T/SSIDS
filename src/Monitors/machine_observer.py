@@ -1,6 +1,6 @@
 import broker
 from transitions import EventData
-from pyIDS.Monitors.monitor import never, whitelist, BA_prec_and_resp
+from src.Monitors.monitor import never, whitelist, BA_prec_and_resp
 
 
 class Observer:
@@ -14,6 +14,7 @@ class Observer:
 
 
         #list of monitors
+        self.list_mon = []
         self.list_mon.extend((self.m1, self.m2, self.m3, self.m4, self.m5))
         
 

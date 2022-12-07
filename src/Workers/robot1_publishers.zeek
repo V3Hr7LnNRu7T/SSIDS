@@ -23,11 +23,10 @@ global allowed : table[count] of set[count] =
 		[0x302] = set(0, 1, 2, 3, 4, 5, 6, 7, 8),
 		[0x581] = set(8),
 		[0x582] = set(8),
-		[0x601] = set(8),
-		[0x602] = set(8),
 		[0x701] = set(1),
 		[0x702] = set(1),
 		[0x77F] = set(1),
+
 	};
 
 
@@ -57,7 +56,10 @@ event can_request(CANID: count, DLC : count, RTR: count, Error: count, Extended:
 	{	
 	if (CANID !in allowed || DLC !in allowed[CANID])
 		{
-		print "bad structure CAN";
+		if (CANID < 0x600 && CANID > 0x67f)
+			{
+			print "bad structure CAN";
+			}
 		}
 	else
 		local p: int_CAN_payload;

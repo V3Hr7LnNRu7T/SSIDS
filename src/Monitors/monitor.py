@@ -114,8 +114,6 @@ class BA_prec_and_resp(monitor):
         # Initialize the state machine
         self.machine = Machine(model=self, states=BA_prec_and_resp.states, transitions=BA_prec_and_resp.transitions, queued=True, initial='0')
         # Mapping
-        # pour la transion 'x' : map_x donne des tuples:(position de la trame qui nous interesse, valeur souhaitee)
-        # trans 'y' : map_y (ex: ((champ1, val1), (champ2, val2), etc...)
         self.cond_transition_x = cond_x
         self.cond_transition_y = cond_y
         # Interval autorise en ms
@@ -133,12 +131,11 @@ class BA_prec_and_resp(monitor):
         #     print('delta temps', (time.time()-self.tempo)*1000)
         # self.tempo = time.time()
         self.ts = getattr(frame, 'ts')
-        #print ('ts :', self.ts, 'time', time.time())
         if self.cond_true(self.cond_transition_x, frame):
-            print('transition x', self.ts)
+            #print('transition x', self.ts)
             self.trigger('x')
         if self.cond_true(self.cond_transition_y, frame):
-            print('transition y', self.ts)
+            #print('transition y', self.ts)
             self.trigger('y')
 
         if (self.start_time is not None and self.inter is not None):
@@ -152,7 +149,6 @@ class BA_prec_and_resp(monitor):
         self.active = False
         if self.verdict() == False:
             self.print_alert()
-        #print('verdict', self.verdict())
         self.to_0()
 
     def prop_unsatisfied(self):
@@ -172,7 +168,7 @@ class BA_prec_and_resp(monitor):
     def stop_clock(self):
         if self.inter is not None:
             if ((self.ts-self.start_time)/timedelta(milliseconds=1))<self.inter[0]:
-                print('stop clock', (self.ts-self.start_time)/timedelta(milliseconds=1), 'ms')
+                #print('stop clock', (self.ts-self.start_time)/timedelta(milliseconds=1), 'ms')
                 print('response not in interval - go to forbidden state')
                 self.to_forbidden()
             else:
