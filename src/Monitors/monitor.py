@@ -103,7 +103,7 @@ class BA_prec_and_resp(monitor):
         {'trigger':'x', 'source':'1', 'dest':'forbidden'},
         {'trigger':'y', 'source':'1', 'dest':'0'},
         {'trigger':'x', 'source':'forbidden', 'dest': None},
-        {'trigger':'y', 'source':'forbidden', 'dest': '='}, #si je veux afficher des alertes a chaque fois que je rentre dans l'etat f, mettre '=' a la place de None
+        {'trigger':'y', 'source':'forbidden', 'dest': '='},
         ]
 
     def __init__(self, name, description, cond_x, cond_y, timeinterval=None, active=False):
@@ -116,7 +116,7 @@ class BA_prec_and_resp(monitor):
         # Mapping
         self.cond_transition_x = cond_x
         self.cond_transition_y = cond_y
-        # Interval autorise en ms
+        # Interval in ms
         self.inter = timeinterval
         # State of security pattern to monitor
         self.is_prop_satisfied = True
